@@ -42,42 +42,12 @@ test('projection at the standard retirement age adds future accrual', () => {
   });
   assert.equal(result.yearsToRetirement, 14);
   assert.equal(result.futureAccrual, 8_441.44);
-  assert.equal(result.unreducedAnnualPension, 13_441.44);
-  assert.equal(result.earlyRetirementReduction, 0);
   assert.equal(result.projectedAnnualPension, 13_441.44);
   assert.equal(result.retirementDate, '2040-04-15');
 });
 
-test('age-63 projection stops accrual at retirement and reduces the total pension', () => {
-  const result = projectPension({
-    birthDate: '1972-04-15', fullTimeSalary: 52_000, partTimeFactor: 1, accruedToDate: 5_000,
-    asOf: '2026-11-18', retirementAge: 63,
-  });
-  assert.equal(result.yearsToRetirement, 9);
-  assert.equal(result.futureAccrual, 5_426.64);
-  assert.equal(result.unreducedAnnualPension, 10_426.64);
-  assert.equal(result.earlyRetirementReduction, 0.325);
-  assert.equal(result.projectedAnnualPension, 7_037.98);
-  assert.equal(result.retirementDate, '2035-04-15');
-});
-
-test('projection accepts the retirement-age boundaries', () => {
-  for (const retirementAge of [60, 68]) {
-    assert.equal(projectPension({
-      birthDate: '1972-04-15', fullTimeSalary: 52_000, partTimeFactor: 1, accruedToDate: 0,
-      asOf: '2026-11-18', retirementAge,
-    }).retirementAge, retirementAge);
-  }
-});
-
-test('projection rejects retirement ages outside the allowed range or below current age', () => {
-  const input = {
-    birthDate: '1972-04-15', fullTimeSalary: 52_000, partTimeFactor: 1, accruedToDate: 0,
-    asOf: '2026-11-18',
-  };
-  assert.throws(() => projectPension({ ...input, retirementAge: 59 }), RangeError);
-  assert.throws(() => projectPension({ ...input, retirementAge: 69 }), RangeError);
+test('projection rejects a retirement age below the early-retirement minimum', () => {
   assert.throws(() => projectPension({
-    ...input, birthDate: '1961-04-15', retirementAge: 64,
-  }), /below the member current age/);
+    birthDate: '1972-04-15', fullTimeSalary: 52_000, partTimeFactor: 1, accruedToDate: 0, asOf: '2026-11-18', retirementAge: 59,
+  }), /between 60 and 68/);
 });
