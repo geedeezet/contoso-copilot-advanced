@@ -122,6 +122,27 @@ paths:
         '201': { description: Created, content: { application/json: { schema: { $ref: '#/components/schemas/ServiceRequest' } } } }
         '400': { $ref: '#/components/responses/BadRequest' }
         '404': { $ref: '#/components/responses/NotFound' }
+  /api/service-requests/overdue:
+    get:
+      tags: [service-requests]
+      summary: Open or in-progress requests past their service level (SLA)
+      parameters:
+        - { name: asOf, in: query, schema: { type: string, format: date } }
+      responses:
+        '200':
+          description: Overdue requests, most overdue first
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    - { $ref: '#/components/schemas/ServiceRequest' }
+                    - type: object
+                      properties:
+                        dueDate: { type: string, format: date }
+                        daysOverdue: { type: integer, minimum: 1 }
+        '400': { $ref: '#/components/responses/BadRequest' }
   /api/service-requests/{id}:
     get:
       tags: [service-requests]
