@@ -206,9 +206,9 @@ node -e "import('./api/src/domain/pension.ts').then(m=>{for (const [s,f] of [[17
 
 ### ✅ Checkpoint 1
 
-- [ ] The first one-liner prints exactly `34455`, `17073`, `120255`, `0`
-- [ ] `docs/evaluations/model-scorecard.md` exists: `ls docs/evaluations/model-scorecard.md` prints the path
-- [ ] Every model value in your scorecard is marked ✅ or ❌ **based on `node -e` output**
+- [x] The first one-liner prints exactly `34455`, `17073`, `120255`, `0`
+- [x] `docs/evaluations/model-scorecard.md` exists: `ls docs/evaluations/model-scorecard.md` prints the path
+- [x] Every model value in your scorecard is marked ✅ or ❌ **based on `node -e` output**
 - [ ] You can say in one sentence when you'd pick model A vs. model B
 
 ---
@@ -538,11 +538,11 @@ git check-ignore .github/hooks/logs/audit.jsonl
 
 ### ✅ Checkpoint 2
 
-- [ ] `node --test ".github/hooks/test/*.test.mjs"` → `ℹ pass 7`, `ℹ fail 0`
-- [ ] The direct `echo … | node .github/hooks/guardrails.mjs` call prints a `deny` decision
-- [ ] `git status --short infra/` prints nothing after the live test
-- [ ] `.github/hooks/logs/audit.jsonl` contains a `"decision":"deny"` line — **or** you recorded a finding in `docs/evaluations/control-map.md`
-- [ ] You can explain "fail closed" and why `.github/hooks/` is protected
+- [x] `node --test ".github/hooks/test/*.test.mjs"` → `ℹ pass 7`, `ℹ fail 0`
+- [x] The direct `echo … | node .github/hooks/guardrails.mjs` call prints a `deny` decision
+- [x] `git status --short infra/` prints nothing after the live test
+- [x] `.github/hooks/logs/audit.jsonl` contains a `"decision":"deny"` line — **or** you recorded a finding in `docs/evaluations/control-map.md`
+- [x] You can explain "fail closed" and why `.github/hooks/` is protected
 
 ---
 
@@ -580,14 +580,14 @@ git push
 
 ### ✅ Checkpoint 3
 
-- [ ] Your A1 commit is on `main`: `git log origin/main --oneline -1` shows *A1: guardrail hook…*
-- [ ] Run the command below; it lists at least `pull_request` and `required_status_checks`:
+- [x] Your A1 commit is on `main`: `git log origin/main --oneline -1` shows *A1: guardrail hook…*
+- [x] Run the command below; it lists at least `pull_request` and `required_status_checks`:
 
 ```bash
 gh api "repos/{owner}/{repo}/rules/branches/main" --jq '.[].type'
 ```
 
-- [ ] The control map rows for **hook** and **ruleset** have a status
+- [x] The control map rows for **hook** and **ruleset** have a status
 
 ---
 
